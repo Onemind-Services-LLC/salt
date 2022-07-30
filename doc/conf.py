@@ -2,6 +2,7 @@
 """
 Sphinx documentation for Salt
 """
+
 import os
 import re
 import sys
@@ -37,14 +38,13 @@ intersphinx_mapping = {
     "python": (
         "https://docs.python.org/3",
         (
-            "/usr/share/doc/python{}.{}/html/objects.inv".format(
-                sys.version_info[0], sys.version_info[1]
-            ),
+            f"/usr/share/doc/python{sys.version_info[0]}.{sys.version_info[1]}/html/objects.inv",
             "/usr/share/doc/python/html/objects.inv",
             None,
         ),
     )
 }
+
 # <---- Intersphinx Settings -------------------------------------------------
 
 # -- General Configuration -----------------------------------------------------
@@ -75,9 +75,8 @@ version = latest_release
 today = ""
 copyright = ""
 if on_saltstack:
-    today = "Generated on {} at {}.".format(
-        time.strftime("%B %d, %Y"), time.strftime("%X %Z")
-    )
+    today = f'Generated on {time.strftime("%B %d, %Y")} at {time.strftime("%X %Z")}.'
+
     copyright = time.strftime("%Y")
 
 # < --- START do not merge these settings to other branches START ---> #
@@ -380,9 +379,7 @@ def skip_mod_init_member(app, what, name, obj, skip, options):
     # pylint: disable=too-many-arguments,unused-argument
     if name.startswith("_"):
         return True
-    if isinstance(obj, types.FunctionType) and obj.__name__ == "mod_init":
-        return True
-    return False
+    return isinstance(obj, types.FunctionType) and obj.__name__ == "mod_init"
 
 
 def _normalize_version(args):

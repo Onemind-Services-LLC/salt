@@ -50,8 +50,7 @@ def py_shell():
         import readline
     import code
 
-    variables = globals().copy()
-    variables.update(locals())
+    variables = globals() | locals()
     shell = code.InteractiveConsole(variables)
     shell.interact()
 

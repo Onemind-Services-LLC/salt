@@ -119,7 +119,7 @@ def _validate(config):
 
     _config = {}
     for part in config:
-        _config.update(part)
+        _config |= part
 
     if "directories" not in _config:
         raise ValidationError(
@@ -206,7 +206,5 @@ def beacon(config):
 
 
 def close(config):
-    observer = __context__.pop("watchdog.observer", None)
-
-    if observer:
+    if observer := __context__.pop("watchdog.observer", None):
         observer.stop()

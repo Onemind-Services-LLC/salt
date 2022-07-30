@@ -37,13 +37,11 @@ def check_changelog_entries(files):
             # Is it named properly
             if not CHANGELOG_ENTRY_RE.match(path.name):
                 print(
-                    "The changelog entry '{}' should have one of the following extensions: {}.".format(
-                        path.relative_to(CODE_ROOT),
-                        ", ".join(repr(ext) for ext in CHANGELOG_EXTENSIONS),
-                    ),
+                    f"""The changelog entry '{path.relative_to(CODE_ROOT)}' should have one of the following extensions: {", ".join((repr(ext) for ext in CHANGELOG_EXTENSIONS))}.""",
                     file=sys.stderr,
                     flush=True,
                 )
+
                 exitcode = 1
                 continue
         except ValueError:
@@ -70,13 +68,11 @@ def check_changelog_entries(files):
                 # No, resume the check
                 pass
             print(
-                "The changelog entry '{}' should have one of the following extensions: {}.".format(
-                    path.relative_to(CODE_ROOT),
-                    ", ".join(repr(ext) for ext in CHANGELOG_EXTENSIONS),
-                ),
+                f"""The changelog entry '{path.relative_to(CODE_ROOT)}' should have one of the following extensions: {", ".join((repr(ext) for ext in CHANGELOG_EXTENSIONS))}.""",
                 file=sys.stderr,
                 flush=True,
             )
+
             exitcode = 1
             continue
         # Is it a changelog entry
@@ -89,14 +85,11 @@ def check_changelog_entries(files):
         except ValueError:
             exitcode = 1
             print(
-                "The changelog entry '{}' should be placed under '{}/', not '{}'".format(
-                    path.name,
-                    CHANGELOG_ENTRIES_PATH.relative_to(CODE_ROOT),
-                    path.relative_to(CODE_ROOT).parent,
-                ),
+                f"The changelog entry '{path.name}' should be placed under '{CHANGELOG_ENTRIES_PATH.relative_to(CODE_ROOT)}/', not '{path.relative_to(CODE_ROOT).parent}'",
                 file=sys.stderr,
                 flush=True,
             )
+
     sys.exit(exitcode)
 
 

@@ -49,10 +49,10 @@ CONTROL_HEIGHT = 30
 def get_size(d, key):
     if key not in d:
         return None
-    m = re.match(r"(\d+)(|%|px)$", d[key])
-    if not m:
+    if m := re.match(r"(\d+)(|%|px)$", d[key]):
+        return int(m[1]), m[2] or "px"
+    else:
         raise ValueError("invalid size %r" % d[key])
-    return int(m.group(1)), m.group(2) or "px"
 
 
 def css(d):
@@ -88,9 +88,10 @@ def visit_youtube_node(self, node):
             "border": "0",
         }
         attrs = {
-            "src": "http://www.youtube.com/embed/%s" % node["id"],
+            "src": f'http://www.youtube.com/embed/{node["id"]}',
             "style": css(style),
         }
+
         self.body.append(self.starttag(node, "iframe", **attrs))
         self.body.append("</iframe></div>")
     else:
@@ -107,9 +108,10 @@ def visit_youtube_node(self, node):
             "border": "0",
         }
         attrs = {
-            "src": "http://www.youtube.com/embed/%s" % node["id"],
+            "src": f'http://www.youtube.com/embed/{node["id"]}',
             "style": css(style),
         }
+
         self.body.append(self.starttag(node, "iframe", **attrs))
         self.body.append("</iframe>")
 
